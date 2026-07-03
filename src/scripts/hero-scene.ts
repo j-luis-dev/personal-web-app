@@ -274,8 +274,10 @@ export function initHeroScene(canvas) {
   var clock = new THREE.Clock();
 
   function animate() {
-    rafId = requestAnimationFrame(animate);
-    if (!heroInView) return;
+    if (!heroInView) {
+      rafId = 0;
+      return;
+    }
 
     var t = clock.getElapsedTime();
     if (modelRoot && !reducedMotion && !isDragging) {
@@ -288,10 +290,13 @@ export function initHeroScene(canvas) {
 
     controls.update();
     renderer.render(scene, camera);
+    rafId = requestAnimationFrame(animate);
   }
 
   function startLoop() {
-    if (!rafId) animate();
+    if (!rafId && heroInView) {
+      rafId = requestAnimationFrame(animate);
+    }
   }
 
   function stopLoop() {

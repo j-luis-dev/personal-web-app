@@ -1,0 +1,33 @@
+---
+interface Props {
+  as?: 'a' | 'button';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  'data-od-id'?: string;
+}
+
+const {
+  as = 'button',
+  href,
+  type = 'button',
+  class: className = '',
+  'data-od-id': dataOdId,
+} = Astro.props;
+
+const sharedClass = `shine-btn ${className}`.trim();
+---
+
+{as === 'a' ? (
+  <a href={href} class={sharedClass} data-od-id={dataOdId}>
+    <span class="shine-btn__main">
+      <slot />
+    </span>
+  </a>
+) : (
+  <button type={type} class={sharedClass} data-od-id={dataOdId}>
+    <span class="shine-btn__main">
+      <slot />
+    </span>
+  </button>
+)}

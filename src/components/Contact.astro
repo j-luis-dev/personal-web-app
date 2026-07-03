@@ -1,16 +1,17 @@
 ---
 import PortfolioFadeText from './PortfolioFadeText.astro';
+import PeachlightShineButton from './PeachlightShineButton.astro';
 import { contact, sections } from '../data/portfolio';
 ---
 
-<section class="py-[clamp(48px,8vw,var(--gap-2xl))] section-band section-handoff" id="contact" data-od-id="contact">
+<section class="py-[clamp(48px,8vw,var(--gap-2xl))] bg-surface border-y border-border section-handoff" id="contact" data-od-id="contact">
   <div class="contact-handoff-frame" aria-hidden="true" data-od-id="contact-handoff-frame"></div>
   <div class="site-container grid grid-cols-2 items-start gap-[var(--gap-xl)] max-[920px]:grid-cols-1">
-    <div class="forest-panel p-[clamp(22px,3vw,30px)]">
+    <div class="forest-panel contact-info-panel p-[clamp(22px,3vw,30px)]">
       <PortfolioFadeText as="p" class="eyebrow" enhance delay={0}>
         {sections.contact.eyebrow}
       </PortfolioFadeText>
-      <PortfolioFadeText as="h2" enhance delay={0.08} data-od-id="contact-heading">
+      <PortfolioFadeText as="h2" class="section-heading" enhance delay={0.08} data-od-id="contact-heading">
         {sections.contact.heading}
       </PortfolioFadeText>
       <PortfolioFadeText as="p" class="lead mt-4" enhance delay={0.16}>
@@ -55,7 +56,9 @@ import { contact, sections } from '../data/portfolio';
         <textarea class="textarea" id="message" name="message" required="" placeholder="Tell me about the project…"></textarea>
         <span class="field-error">A short message helps.</span>
       </div>
-      <button type="submit" class="btn btn-primary" data-od-id="contact-submit">Send message</button>
+      <PeachlightShineButton type="submit" data-od-id="contact-submit">
+        Send message
+      </PeachlightShineButton>
       <div class="form-success" id="form-success" role="status" data-od-id="form-success">
         {contact.form.successMessage}
       </div>

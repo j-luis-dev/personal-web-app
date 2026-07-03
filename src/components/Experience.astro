@@ -3,13 +3,13 @@ import PortfolioFadeText from './PortfolioFadeText.astro';
 import { experience, sections } from '../data/portfolio';
 ---
 
-<section class="py-[clamp(48px,8vw,var(--gap-2xl))] section-band" id="experience" data-od-id="experience">
+<section class="py-[clamp(48px,8vw,var(--gap-2xl))] bg-surface border-y border-border" id="experience" data-od-id="experience">
   <div class="site-container">
     <div class="max-w-[40ch] mb-10">
       <PortfolioFadeText as="p" class="eyebrow" enhance delay={0}>
         {sections.experience.eyebrow}
       </PortfolioFadeText>
-      <PortfolioFadeText as="h2" enhance delay={0.08} data-od-id="experience-heading">
+      <PortfolioFadeText as="h2" class="section-heading" enhance delay={0.08} data-od-id="experience-heading">
         {sections.experience.heading}
       </PortfolioFadeText>
     </div>
@@ -17,7 +17,7 @@ import { experience, sections } from '../data/portfolio';
       {experience.map((entry) =>
         entry.kind === 'timeline' ? (
           <div
-            class="timeline-row forest-panel forest-panel--pad reveal"
+            class="grid grid-cols-[140px_1fr] items-start gap-[var(--gap-lg)] max-[720px]:grid-cols-1 max-[720px]:gap-[var(--gap-xs)] forest-panel p-[clamp(20px,3vw,26px)] reveal"
             style={`--reveal-delay: ${entry.revealDelay}`}
             data-od-id={entry.id}
           >
@@ -30,7 +30,7 @@ import { experience, sections } from '../data/portfolio';
           </div>
         ) : (
           <div
-            class="timeline-compact forest-panel forest-panel--pad reveal text-muted text-[14px] leading-[1.55]"
+            class="forest-panel p-[clamp(16px,2.5vw,22px)] reveal text-muted text-[14px] leading-[1.55]"
             style={`--reveal-delay: ${entry.revealDelay}`}
             data-od-id={entry.id}
           >

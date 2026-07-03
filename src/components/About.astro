@@ -18,11 +18,11 @@ import { about, sections } from '../data/portfolio';
           data-od-id="about-photo"
         />
       </figure>
-      <div class="forest-panel p-[clamp(24px,3.5vw,32px)]">
+      <div class="forest-panel about-content-panel p-[clamp(24px,3.5vw,32px)]">
         <PortfolioFadeText as="p" class="eyebrow" enhance delay={0}>
           {sections.about.eyebrow}
         </PortfolioFadeText>
-        <PortfolioFadeText as="h2" enhance delay={0.08} data-od-id="about-heading">
+        <PortfolioFadeText as="h2" class="section-heading" enhance delay={0.08} data-od-id="about-heading">
           {sections.about.heading}
         </PortfolioFadeText>
         <PortfolioFadeText as="p" class="lead mt-5" enhance delay={0.16} data-od-id="about-bio">

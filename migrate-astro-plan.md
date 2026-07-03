@@ -4,12 +4,12 @@
 
 **Origen:** `/Users/jose/Documents/proyects/open-design/.od/projects/5834959c-c074-45b8-8b03-f325121d9d1e`  
 **Destino:** `/Users/jose/Documents/proyects/personal-web-app`  
-**Alcance aprobado:** Fases 0 + 1 + 2 ✅ completadas · **Siguiente:** Fase R (refactor CSS → Tailwind)
+**Alcance aprobado:** Fases 0 + 1 + 2 + R ✅ completadas · **Siguiente:** Fase 3 (integración Astro nativa)
 
 **Estado (2026-07-03):**
-- Fases 0, 1, 2: **completas** (`portfolio.ts`, componentes, motion, paridad visual)
-- GLB Draco: **hecho** (~30 MB → ~2.8 MB, `DRACOLoader` en `hero-scene.ts`)
-- Tailwind: instalado pero **no conectado** a `PortfolioLayout` (`global.css` sin importar)
+- Fases 0, 1, 2, R + R7: **completas** (`portfolio.ts`, Tailwind bridge, `global.css` @layer components)
+- `portfolio.css`: **134 líneas** (estructural permanente) · `portfolio-motion.css`: **~482 líneas** (motion/handoffs)
+- GLB Draco: **hecho** (~2.8 MB, `DRACOLoader`)
 - Deploy / CI / Lighthouse: **diferido** (Fase 5)
 
 ---
@@ -20,7 +20,7 @@
 |---|---|---|
 | Entrada | `index.html` (~1.480 líneas) | `src/pages/index.astro` + componentes |
 | 3D Hero | `hero-scene.js` + Three.js vía importmap/CDN | `src/scripts/hero-scene.ts` + `pnpm add three` |
-| Estilos | CSS custom inline en `<style>` | `tokens.css` + `portfolio.css` → **Fase R:** Tailwind + `portfolio-motion.css` |
+| Estilos | CSS custom inline en `<style>` | `tokens.css` + `global.css` (@layer components) + `portfolio.css` (134) + `portfolio-motion.css` (482) ✅ |
 | Motion | Inline `<script>` (load intro, reveals, handoffs) | `src/scripts/portfolio-motion.ts` |
 | Assets | `Iam.png`, `Meshy_AI_Pet.glb`, CV `.md` | `src/assets/` + `public/models/` |
 | Contenido | Hardcoded en HTML | `src/data/portfolio.ts` ✅ |
@@ -453,11 +453,11 @@ Diff visual: sitio pre-Fase-2 vs post-Fase-2 — **mismo copy y URLs**, no compa
 
 ---
 
-### Fase R — Refactor CSS → Tailwind (próxima — ~3–5 sesiones)
+### Fase R — Refactor CSS → Tailwind ✅
 
 Objetivo: migrar layout y tipografía a Tailwind **sin perder polish** de motion, handoffs ni decoración. Estrategia **strangler-fig** módulo por módulo.
 
-**OpenSpec:** change `peachlight-css-tailwind-refactor`
+**OpenSpec:** `peachlight-css-tailwind-refactor` (R0–R6) + `peachlight-css-tailwind-cleanup` (R7)
 
 #### Principios
 
@@ -504,9 +504,21 @@ Objetivo: migrar layout y tipografía a Tailwind **sin perder polish** de motion
 
 #### R6 — Split CSS final
 
-- [x] Mover reglas permanentes a `portfolio-motion.css` (~515 líneas)
-- [x] `portfolio.css` reducido a polish estructural (~254 líneas)
+- [x] Mover reglas permanentes a `portfolio-motion.css` (~482 líneas)
+- [x] `portfolio.css` reducido a polish estructural
 - [x] Checklist §7 completo
+
+#### R7 — Cleanup final (`peachlight-css-tailwind-cleanup`)
+
+- [x] R7.1 Dead code removal (`.stack`, `.pill`, `.h2`/`.h3`, etc.)
+- [x] R7.2 Botones unificados (`btn-base btn-accent-fill`)
+- [x] R7.3 `section-band`, `contact-link`, `form-success`, `.tag:hover` → `@layer components`
+- [x] R7.4 Form fields → `@layer components` (`.input`, `.textarea`, `.field-error`)
+- [x] R7.5 Timeline grid, `project-thumb` → Tailwind / components
+- [x] R7.6 Auditoría: `portfolio.css` **134 líneas** (reset + topnav + panels + hero + about-photo)
+- [x] Bugfixes: selector skills reveal, `a.contact-link` hover, `.section-heading` en h2
+
+**Resultado:** `portfolio.css` 255 → **134** · `global.css` con 15+ componentes `@layer`
 
 #### CSS permanente (nunca a Tailwind)
 
@@ -678,8 +690,9 @@ La antigua Fase 4 mezclaba deploy + refactor Tailwind. Separadas:
 ✅ R3   Experience + About
 ✅ R4   Work + Contact
 ✅ R5   Hero copy layout
-✅ R6   portfolio-motion.css split + §7 validation
-□ 3.x  i18n, Image, SEO (después de R)
+✅ R6   portfolio-motion.css split
+✅ R7   CSS cleanup (255→134 líneas portfolio.css)
+□ 3.x  i18n, Image, SEO (siguiente)
 □ 5.x  Deploy + performance (al final)
 ```
 
@@ -692,7 +705,7 @@ La antigua Fase 4 mezclaba deploy + refactor Tailwind. Separadas:
 | **Alcance MVP** | Fases 0 + 1 + 2 | ✅ Completo |
 | **GLB** | `Meshy_AI_Pet.glb` en `public/models/` | ✅ |
 | **GLB Draco** | ~2.8 MB + DRACOLoader | ✅ Hecho |
-| **CSS refactor** | Fase R — strangler-fig por módulo, `@layer` | **→ Ahora** |
+| **CSS refactor** | Fase R + R7 — strangler-fig, `@layer components` | ✅ Completo (134 + 482 líneas) |
 | **Deploy** | Vercel / Netlify / CF Pages | Fase 5 (diferido) |
 | **Experience** | Sección separada Work/About | ✅ |
 | **Formulario backend** | Formspree/Resend | Fase 3 |
@@ -709,11 +722,7 @@ La antigua Fase 4 mezclaba deploy + refactor Tailwind. Separadas:
 
 ## 13. Próximo paso
 
-Fases 0–2 y **Fase R** completas. Siguiente: **Fase 3** (integración Astro nativa).
-
-```
-/openspec:apply peachlight-portfolio-phase-2
-```
+Fases 0–2, **Fase R** y **R7** completas. Siguiente: **Fase 3** (integración Astro nativa).
 
 O pedir: **"implementa Fase 3"** — Content Collections, i18n, `<Image />`, SEO, form backend.
 

@@ -11,6 +11,7 @@ function initPortfolioMotion(): void {
     workTop: number;
     aboutTop: number;
     contactTop: number;
+    sectionTops: { id: string; top: number }[];
   } | null = null;
 
   function measureLayout(): void {
@@ -26,21 +27,25 @@ function initPortfolioMotion(): void {
       workTop: workEl ? workEl.offsetTop : 0,
       aboutTop: aboutEl ? aboutEl.offsetTop : 0,
       contactTop: contactEl ? contactEl.offsetTop : 0,
+      sectionTops: Array.from(sections).map((sec) => ({
+        id: sec.id,
+        top: (sec as HTMLElement).offsetTop,
+      })),
     };
   }
 
   function updateNav(): void {
     const scrollY = window.scrollY + 120;
     let current = '';
-    const sectionList = Array.from(sections);
+    const sectionTops = layoutCache?.sectionTops ?? [];
     const nearBottom =
       window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
-    if (nearBottom && sectionList.length) {
-      current = sectionList[sectionList.length - 1].id;
+    if (nearBottom && sectionTops.length) {
+      current = sectionTops[sectionTops.length - 1].id;
     } else {
-      sectionList.forEach((sec) => {
-        if (sec.offsetTop <= scrollY) current = sec.id;
-      });
+      for (const { id, top } of sectionTops) {
+        if (top <= scrollY) current = id;
+      }
     }
     navLinks.forEach((link) => {
       link.classList.toggle('is-active', link.getAttribute('href') === '#' + current);
@@ -69,13 +74,6 @@ function initPortfolioMotion(): void {
 
   function initSectionHandoffs(): void {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion) {
-      document.documentElement.style.setProperty('--scroll-progress', '0');
-      window.addEventListener('scroll', updateNav, { passive: true });
-      updateNav();
-      return;
-    }
-
     const hero = document.querySelector('[data-od-id="hero"]') as HTMLElement | null;
     const work = document.getElementById('work');
     const about = document.getElementById('about');
@@ -86,6 +84,11 @@ function initPortfolioMotion(): void {
     measureLayout();
 
     function applyHandoffs(): void {
+      if (reducedMotion) {
+        updateNav();
+        return;
+      }
+
       if (!layoutCache) measureLayout();
       const cache = layoutCache!;
       const scrollY = window.scrollY;
@@ -156,6 +159,9 @@ function initPortfolioMotion(): void {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
+    if (reducedMotion) {
+      document.documentElement.style.setProperty('--scroll-progress', '0');
+    }
     applyHandoffs();
   }
 

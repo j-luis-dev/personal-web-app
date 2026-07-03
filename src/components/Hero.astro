@@ -1,5 +1,6 @@
 ---
 import PortfolioFadeText from './PortfolioFadeText.astro';
+import PeachlightShineButton from './PeachlightShineButton.astro';
 import { site } from '../data/portfolio';
 ---
 
@@ -28,7 +29,7 @@ import { site } from '../data/portfolio';
       <PortfolioFadeText as="p" class="eyebrow" delay={0.04}>
         {site.eyebrow}
       </PortfolioFadeText>
-      <h1 class="h1" data-od-id="hero-headline">
+      <h1 class="m-0 font-display text-[length:var(--fs-h1)] leading-[1.04] tracking-[-0.02em]" data-od-id="hero-headline">
         <PortfolioFadeText as="span" delay={0.08} class="hero-headline-line max-w-full break-words">
           {site.name.first}
         </PortfolioFadeText><br>
@@ -43,11 +44,13 @@ import { site } from '../data/portfolio';
         {site.tagline}
       </PortfolioFadeText>
       <PortfolioFadeText as="div" class="mt-7 inline-flex flex-wrap gap-[var(--gap-sm)]" delay={0.4}>
-        <a
+        <PeachlightShineButton
+          as="a"
           href={site.ctas.primary.href}
-          class="btn-base btn-accent-fill hover:bg-[var(--accent-hover)] focus-visible:bg-[var(--accent-hover)]"
           data-od-id="hero-cta-primary"
-        >{site.ctas.primary.label}</a>
+        >
+          {site.ctas.primary.label}
+        </PeachlightShineButton>
         <a
           href={site.ctas.secondary.href}
           class="btn-base border-border bg-transparent text-fg after:content-['→'] after:transition-transform after:duration-200 hover:border-accent hover:after:translate-x-0.5 focus-visible:border-accent"

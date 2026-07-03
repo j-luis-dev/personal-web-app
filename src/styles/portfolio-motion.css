@@ -85,7 +85,7 @@ body {
     border-color 200ms cubic-bezier(0.23, 1, 0.32, 1) 0s,
     color 200ms cubic-bezier(0.23, 1, 0.32, 1) 0s;
 }
-.reveal.is-visible [data-od-id="skills-section"] .tag {
+.reveal.is-visible[data-od-id="skills-section"] .tag {
   opacity: 1;
   transform: translateY(0);
 }
@@ -110,6 +110,7 @@ body {
   }
 }
 
+/* Forest panel — interior wash, grain, glow (matches Hero mascot stage) */
 .forest-panel::before {
   content: '';
   position: absolute;
@@ -118,30 +119,114 @@ body {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 88% 68% at 50% -8%, color-mix(in oklch, var(--glow) 11%, transparent) 0%, transparent 56%),
-    radial-gradient(ellipse 52% 44% at 92% 96%, color-mix(in oklch, var(--accent) 7%, transparent) 0%, transparent 54%);
+    radial-gradient(circle at 50% 42%, color-mix(in oklch, var(--glow) 22%, transparent) 0%, transparent 62%),
+    radial-gradient(circle at 82% 90%, color-mix(in oklch, var(--accent) 12%, transparent) 0%, transparent 58%),
+    radial-gradient(ellipse 68% 52% at 10% 8%, color-mix(in oklch, var(--glow) 14%, transparent) 0%, transparent 56%);
+  opacity: 0.78;
+  transition: opacity 520ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.forest-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.42;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  box-shadow:
+    inset 0 -1px 0 color-mix(in oklch, var(--accent) 18%, transparent),
+    0 0 20px 0 color-mix(in oklch, var(--accent) 10%, transparent);
+  transition:
+    opacity 520ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 520ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mascot-stage.forest-panel::after {
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+}
+
+.forest-panel:not(.mascot-stage):not(.forest-panel--lift):is(:hover, :focus-within)::before {
   opacity: 0.92;
 }
 
-[data-od-id^="project-"] {
+.forest-panel:not(.mascot-stage):not(.forest-panel--lift):is(:hover, :focus-within)::after {
+  opacity: 0.52;
+}
+
+/* Work project cards — hero panel + lift interaction */
+.forest-panel--lift.reveal {
   transition:
-    transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
-    box-shadow 200ms cubic-bezier(0.23, 1, 0.32, 1);
+    opacity 460ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 460ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 480ms cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 480ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
-[data-od-id^="project-"]:hover,
-[data-od-id^="project-"]:focus-within {
+
+.forest-panel--lift.reveal.is-visible:is(:hover, :focus-within) {
   transform: translateY(-4px);
+  transition:
+    opacity 460ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 220ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 520ms cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 520ms cubic-bezier(0.23, 1, 0.32, 1);
 }
-.card.forest-panel[data-od-id^="project-"]:hover,
-.card.forest-panel[data-od-id^="project-"]:focus-within {
+
+.forest-panel--lift:is(:hover, :focus-within) {
+  border-color: var(--accent);
   box-shadow:
-    inset 0 1px 0 color-mix(in oklch, var(--fg) 5%, transparent),
-    0 22px 52px color-mix(in oklch, var(--bg) 48%, transparent),
-    0 0 0 1px color-mix(in oklch, var(--accent) 22%, var(--border));
+    inset 0 1px 0 color-mix(in oklch, var(--fg) 7%, transparent),
+    0 28px 56px color-mix(in oklch, var(--bg) 44%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--accent) 35%, transparent),
+    0 14px 36px color-mix(in oklch, var(--accent) 7%, transparent),
+    0 0 88px color-mix(in oklch, var(--glow) 8%, transparent);
 }
+
+.forest-panel--lift:is(:hover, :focus-within)::before {
+  opacity: 1;
+}
+
+.forest-panel--lift:is(:hover, :focus-within)::after {
+  opacity: 0.68;
+  box-shadow:
+    inset 0 -1px 0 color-mix(in oklch, var(--accent) 42%, transparent),
+    0 0 32px 4px color-mix(in oklch, var(--accent) 22%, transparent);
+}
+
+.forest-panel--lift:is(:hover, :focus-within) .forest-panel__title {
+  color: var(--accent);
+}
+
+.forest-panel--lift .project-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 72% 58% at 18% 14%,
+    color-mix(in oklch, var(--glow) 16%, transparent) 0%,
+    transparent 62%
+  );
+  opacity: 0.78;
+  transition: opacity 480ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.forest-panel--lift:is(:hover, :focus-within) .project-thumb::before {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  [data-od-id^="project-"]:hover,
-  [data-od-id^="project-"]:focus-within { transform: none; }
+  .forest-panel--lift:is(:hover, :focus-within),
+  .forest-panel--lift.reveal.is-visible:is(:hover, :focus-within) {
+    transform: none;
+  }
 }
 
 /* Hero ambient lighting — orbs, gradient, grain (Hero only) */
@@ -313,44 +398,27 @@ body {
   .mascot-glow { animation: none; opacity: 0.85; }
 }
 
-[data-od-id="about-photo-wrap"]::after {
-  content: '';
-  position: absolute;
-  inset: 10px;
-  border-radius: var(--radius-lg);
-  pointer-events: none;
-  opacity: 0;
-  z-index: 2;
-  box-shadow:
-    0 0 0 1px color-mix(in oklch, var(--accent) 28%, var(--border)),
-    0 18px 44px color-mix(in oklch, #FFD666 14%, transparent),
-    0 0 28px color-mix(in oklch, var(--accent) 10%, transparent);
-}
 @keyframes about-photo-breathe {
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-5px) scale(1.008); }
 }
-@keyframes about-photo-glow {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+@keyframes about-panel-glow {
+  0%, 100% { opacity: 0.78; }
+  50% { opacity: 0.92; }
 }
 .reveal.is-visible .about-photo {
-  animation: about-photo-breathe 7s cubic-bezier(0.23, 1, 0.32, 1) 480ms infinite;
+  animation: about-photo-breathe 7s cubic-bezier(0.23, 1, 0.32, 1) 460ms infinite;
 }
-.reveal.is-visible[data-od-id="about-photo-wrap"]::after {
-  animation: about-photo-glow 7s cubic-bezier(0.23, 1, 0.32, 1) 480ms infinite;
+.reveal.is-visible[data-od-id="about-photo-wrap"].forest-panel::before {
+  animation: about-panel-glow 7s cubic-bezier(0.23, 1, 0.32, 1) 460ms infinite;
 }
 [data-od-id="about-photo-wrap"]:hover .about-photo {
   animation-play-state: paused;
   transform: translateY(-6px) scale(1.012);
 }
-[data-od-id="about-photo-wrap"]:hover::after {
+[data-od-id="about-photo-wrap"]:hover.forest-panel::before {
   animation-play-state: paused;
   opacity: 1;
-  box-shadow:
-    0 0 0 1px color-mix(in oklch, var(--accent) 42%, var(--border)),
-    0 22px 48px color-mix(in oklch, #FFD666 18%, transparent),
-    0 0 32px color-mix(in oklch, var(--accent) 14%, transparent);
 }
 @media (prefers-reduced-motion: reduce) {
   .about-photo,
@@ -359,10 +427,8 @@ body {
     transform: none;
     transition: none;
   }
-  [data-od-id="about-photo-wrap"]::after,
-  .reveal.is-visible[data-od-id="about-photo-wrap"]::after {
+  .reveal.is-visible[data-od-id="about-photo-wrap"].forest-panel::before {
     animation: none;
-    opacity: 0;
   }
   [data-od-id="about-photo-wrap"]:hover .about-photo {
     transform: none;
