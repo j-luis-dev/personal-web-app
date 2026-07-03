@@ -1,0 +1,85 @@
+---
+import { projects, sections } from '../data/portfolio';
+import type { ProjectId } from '../data/portfolio';
+---
+
+<section class="py-[clamp(48px,8vw,var(--gap-2xl))] section-handoff" id="work" data-od-id="work">
+  <div class="work-handoff-glow" aria-hidden="true" data-od-id="work-handoff-glow"></div>
+  <div class="site-container">
+    <div class="flex items-center justify-between gap-[var(--gap-md)] reveal-stagger" style="margin-bottom: 32px;">
+      <div style="max-width: 40ch;">
+        <p class="eyebrow text-rise" style="--rise-i: 0">{sections.work.eyebrow}</p>
+        <h2 class="text-rise" style="--rise-i: 1" data-od-id="work-heading">{sections.work.heading}</h2>
+      </div>
+    </div>
+    <div class="grid-2">
+      {projects.map((project) => {
+        const thumbId: ProjectId = project.id;
+        const cardInner = (
+          <>
+            <div class="project-thumb" aria-hidden="true">
+              {thumbId === 'mds' && (
+                <svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.4" color="var(--muted)">
+                  <rect x="8" y="12" width="44" height="56" rx="6" stroke="var(--border)" />
+                  <rect x="68" y="12" width="44" height="24" rx="6" stroke="var(--border)" />
+                  <rect x="68" y="44" width="44" height="24" rx="6" stroke="var(--border)" />
+                  <path d="M18 28h24M18 38h16M18 48h20" stroke="var(--accent)" opacity="0.7" />
+                </svg>
+              )}
+              {thumbId === 'tvazteca' && (
+                <svg viewBox="0 0 120 80" fill="none" color="var(--muted)">
+                  <rect x="10" y="16" width="28" height="48" rx="5" stroke="var(--border)" stroke-width="1.4" />
+                  <rect x="46" y="16" width="28" height="48" rx="5" stroke="var(--border)" stroke-width="1.4" />
+                  <rect x="82" y="16" width="28" height="48" rx="5" stroke="var(--border)" stroke-width="1.4" />
+                  <circle cx="24" cy="28" r="3" fill="var(--accent)" opacity="0.8" />
+                  <circle cx="60" cy="28" r="3" fill="var(--muted)" opacity="0.5" />
+                  <circle cx="96" cy="28" r="3" fill="var(--muted)" opacity="0.5" />
+                </svg>
+              )}
+              {thumbId === 'occ' && (
+                <svg viewBox="0 0 120 80" fill="none" color="var(--muted)">
+                  <rect x="38" y="8" width="44" height="64" rx="8" stroke="var(--border)" stroke-width="1.4" />
+                  <rect x="44" y="18" width="32" height="42" rx="4" fill="var(--bg)" stroke="var(--border)" stroke-width="1" />
+                  <rect x="50" y="26" width="20" height="4" rx="2" fill="var(--accent)" opacity="0.7" />
+                  <rect x="50" y="34" width="16" height="3" rx="1.5" fill="var(--muted)" opacity="0.4" />
+                  <rect x="50" y="40" width="18" height="3" rx="1.5" fill="var(--muted)" opacity="0.3" />
+                </svg>
+              )}
+              {thumbId === 'asu' && (
+                <svg viewBox="0 0 120 80" fill="none" color="var(--muted)">
+                  <rect x="8" y="14" width="104" height="52" rx="6" stroke="var(--border)" stroke-width="1.4" />
+                  <rect x="16" y="24" width="48" height="6" rx="3" fill="var(--muted)" opacity="0.35" />
+                  <rect x="16" y="36" width="72" height="4" rx="2" fill="var(--muted)" opacity="0.25" />
+                  <rect x="16" y="44" width="60" height="4" rx="2" fill="var(--muted)" opacity="0.2" />
+                  <rect x="16" y="54" width="32" height="8" rx="4" fill="var(--accent)" opacity="0.6" />
+                </svg>
+              )}
+            </div>
+            <span class:list={['tag', project.tagVariant === 'internal' && 'tag-internal']}>{project.tag}</span>
+            <h3 style="margin-top: 12px; font-family: var(--font-display);">{project.title}</h3>
+            <p style="margin: 8px 0 0; color: var(--muted); font-size: 15px;">{project.description}</p>
+            {project.linkLabel && (
+              <span class="meta" style="display: inline-block; margin-top: 12px;">{project.linkLabel}</span>
+            )}
+          </>
+        );
+
+        return (
+          <article
+            class="card forest-panel reveal"
+            style={`--reveal-delay: ${project.revealDelay}`}
+            data-od-id={`project-${project.id}`}
+          >
+            {project.href ? (
+              <a href={project.href} target="_blank" rel="noopener noreferrer">
+                {cardInner}
+              </a>
+            ) : (
+              cardInner
+            )}
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

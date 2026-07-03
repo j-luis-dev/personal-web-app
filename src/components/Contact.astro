@@ -1,0 +1,57 @@
+---
+import { contact, sections } from '../data/portfolio';
+---
+
+<section class="py-[clamp(48px,8vw,var(--gap-2xl))] section-band section-handoff" id="contact" data-od-id="contact">
+  <div class="contact-handoff-frame" aria-hidden="true" data-od-id="contact-handoff-frame"></div>
+  <div class="site-container contact-grid">
+    <div class="forest-panel contact-info-panel reveal-stagger">
+      <p class="eyebrow text-rise" style="--rise-i: 0">{sections.contact.eyebrow}</p>
+      <h2 class="text-rise" style="--rise-i: 1" data-od-id="contact-heading">{sections.contact.heading}</h2>
+      <p class="lead text-rise" style="margin-top: 16px; --rise-i: 2">{sections.contact.lead}</p>
+      <div class="contact-links text-rise" style="--rise-i: 3" data-od-id="contact-links">
+        <a class="contact-link" href={`mailto:${contact.email}`} data-od-id="contact-email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+          {contact.email}
+        </a>
+        <a class="contact-link" href={contact.phone.href} data-od-id="contact-phone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6.5 4h3l1.5 4-2 1.5a11 11 0 005 5L17 12.5 21 14v3a2 2 0 01-2 2A16 16 0 014 6.5 4 2 2 0 016.5 4z"></path></svg>
+          {contact.phone.display}
+        </a>
+        <a class="contact-link" href={contact.linkedin.href} target="_blank" rel="noopener noreferrer" data-od-id="contact-linkedin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M8 11v5M8 8v.01M12 16v-3c0-1.5 1-2.5 2.5-2.5S17 11.5 17 13v3"></path></svg>
+          {contact.linkedin.label}
+        </a>
+        <a class="contact-link" href={contact.github.href} target="_blank" rel="noopener noreferrer" data-od-id="contact-github">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 19c-4 1.5-4-2.5-6-3m12 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0018 4.77 5.07 5.07 0 0017.91 1S16.73.65 13 2.48a13.38 13.38 0 00-7 0C2.27.65 1.09 1 1.09 1A5.07 5.07 0 000 4.77 5.44 5.44 0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+          {contact.github.label}
+        </a>
+        <span class="contact-link" data-od-id="contact-location">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s7-4.5 7-11a7 7 0 10-14 0c0 6.5 7 11 7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+          {contact.location}
+        </span>
+      </div>
+    </div>
+    <form class="form-stack forest-panel forest-panel--pad reveal" style="--reveal-delay: 80ms" id="contact-form" data-od-id="contact-form" novalidate="">
+      <div class="field" data-od-id="field-name">
+        <label for="name">Name</label>
+        <input class="input" type="text" id="name" name="name" autocomplete="name" required="">
+        <span class="field-error">Please enter your name.</span>
+      </div>
+      <div class="field" data-od-id="field-email">
+        <label for="email">Email</label>
+        <input class="input" type="email" id="email" name="email" autocomplete="email" required="">
+        <span class="field-error">A valid email is required.</span>
+      </div>
+      <div class="field" data-od-id="field-message">
+        <label for="message">Message</label>
+        <textarea class="textarea" id="message" name="message" required="" placeholder="Tell me about the project…"></textarea>
+        <span class="field-error">A short message helps.</span>
+      </div>
+      <button type="submit" class="btn btn-primary" data-od-id="contact-submit">Send message</button>
+      <div class="form-success" id="form-success" role="status" data-od-id="form-success">
+        {contact.form.successMessage}
+      </div>
+    </form>
+  </div>
+</section>

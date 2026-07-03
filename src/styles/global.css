@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+@utility site-container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@layer components {
+  .eyebrow {
+    @apply m-0 mb-[var(--gap-md)] font-mono text-xs uppercase tracking-[0.08em] text-accent;
+  }
+
+  .lead {
+    @apply m-0 max-w-[60ch] text-[length:var(--fs-lead)] leading-[1.55] text-muted;
+  }
+
+  .meta {
+    @apply font-mono text-[length:var(--fs-meta)] tracking-[0.01em] text-muted;
+  }
+
+  .num {
+    @apply font-mono tabular-nums;
+  }
+
+  .btn-base {
+    @apply inline-flex items-center gap-2 rounded-[var(--radius)] border border-transparent px-5 py-[11px] text-[15px] font-medium tracking-[0.02em] transition-[transform,background,border-color,color] duration-200 active:translate-y-px;
+  }
+
+  .btn-accent-fill {
+    @apply border-accent bg-accent;
+    color: var(--bg);
+  }
+}
+
+/* Unlayered: preserves Peachlight Forest polish (cards, forms, hero, motion).
+   Tailwind utilities/components only override where explicitly migrated. */
+@import "./portfolio.css";
+
+/* Links inherit color from legacy `a { color: inherit }` — restore CTA text on accent fill */
+a.btn-accent-fill {
+  color: var(--bg);
+}

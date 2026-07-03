@@ -1,0 +1,49 @@
+---
+import { experience, sections } from '../data/portfolio';
+---
+
+<section class="py-[clamp(48px,8vw,var(--gap-2xl))] section-band" id="experience" data-od-id="experience">
+  <div class="site-container">
+    <div class="reveal-stagger max-w-[40ch] mb-10">
+      <p class="eyebrow text-rise" style="--rise-i: 0">{sections.experience.eyebrow}</p>
+      <h2 class="text-rise" style="--rise-i: 1" data-od-id="experience-heading">{sections.experience.heading}</h2>
+    </div>
+    <div class="flex flex-col gap-[var(--gap-md)]">
+      {experience.map((entry) =>
+        entry.kind === 'timeline' ? (
+          <div
+            class="timeline-row forest-panel forest-panel--pad reveal"
+            style={`--reveal-delay: ${entry.revealDelay}`}
+            data-od-id={entry.id}
+          >
+            <div class="meta num">{entry.period}</div>
+            <div>
+              <h3 class="font-display text-[19px] mb-1">{entry.company}</h3>
+              <p class="text-muted text-[15px] m-0">{entry.role}</p>
+              <p class="text-muted text-[15px] mt-2 mb-0 max-w-[58ch]">{entry.detail}</p>
+            </div>
+          </div>
+        ) : (
+          <div
+            class="timeline-compact forest-panel forest-panel--pad reveal text-muted text-[14px] leading-[1.55]"
+            style={`--reveal-delay: ${entry.revealDelay}`}
+            data-od-id={entry.id}
+          >
+            {entry.entries.map((item, index) => (
+              <>
+                {index > 0 && <>&nbsp;·&nbsp;</>}
+                <strong style="color: var(--fg); font-weight: 500;">{item.company}</strong>
+                {' · '}
+                {item.role}
+                {' · '}
+                {item.period}
+                {' — '}
+                {item.detail}
+              </>
+            ))}
+          </div>
+        ),
+      )}
+    </div>
+  </div>
+</section>
