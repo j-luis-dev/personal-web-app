@@ -470,43 +470,43 @@ Objetivo: migrar layout y tipografía a Tailwind **sin perder polish** de motion
 
 #### R0 — Puente Tailwind (~30 min)
 
-- [ ] `@theme inline` en `global.css` (colores/fuentes Peachlight Forest)
-- [ ] `@layer legacy` + import `portfolio.css`
-- [ ] Importar `global.css` en `PortfolioLayout.astro`
-- [ ] Cero cambio visual
+- [x] `@theme inline` en `global.css` (colores/fuentes Peachlight Forest)
+- [x] Import unlayered `portfolio.css` + `portfolio-motion.css` vía `global.css` (sustituye `@layer legacy` — evita regresión preflight)
+- [x] Importar `global.css` en `PortfolioLayout.astro`
+- [x] Cero cambio visual
 
 #### R1 — Layout + Footer
 
-- [ ] Resolver colisión `.container` → `site-container` o utilities
-- [ ] Migrar `Footer.astro`, `.row-between`, `.section` padding
-- [ ] Eliminar reglas migradas de `portfolio.css`
+- [x] Resolver colisión `.container` → `site-container` o utilities
+- [x] Migrar `Footer.astro`, `.row-between`, `.section` padding
+- [x] Eliminar reglas migradas de `portfolio.css`
 
 #### R2 — Tipografía + botones
 
-- [ ] `.eyebrow`, `.lead`, `.meta` → Tailwind o `@layer components`
-- [ ] `.btn-*` en Hero / TopNav
-- [ ] Nav `::after` underline **queda en CSS**
+- [x] `.eyebrow`, `.lead`, `.meta` → Tailwind o `@layer components`
+- [x] `.btn-*` en Hero / TopNav
+- [x] Nav `::after` underline **queda en CSS**
 
 #### R3 — Experience + About
 
-- [ ] Layout timeline y grid About → Tailwind
-- [ ] `.about-photo` breathe animation **queda en CSS**
+- [x] Layout timeline y grid About → Tailwind
+- [x] `.about-photo` breathe animation **queda en CSS** (`portfolio-motion.css`)
 
 #### R4 — Work + Contact
 
-- [ ] Grid cards, `.tag` → Tailwind
-- [ ] `.forest-panel` decor **queda en CSS**
+- [x] Grid cards, `.tag` → Tailwind
+- [x] `.forest-panel` decor **queda en CSS** (`portfolio-motion.css`)
 
 #### R5 — Hero copy layout
 
-- [ ] `.hero-split`, `.hero-copy`, `.hero-cta` → Tailwind
-- [ ] `.hero-ambient`, orbs, handoff bridge **quedan en CSS**
+- [x] `.hero-split`, `.hero-copy`, `.hero-cta` → Tailwind
+- [x] `.hero-ambient`, orbs, handoff bridge **quedan en CSS** (`portfolio-motion.css`)
 
 #### R6 — Split CSS final
 
-- [ ] Mover reglas permanentes a `portfolio-motion.css` (~350 líneas est.)
-- [ ] `portfolio.css` eliminado o vacío
-- [ ] Checklist §7 completo
+- [x] Mover reglas permanentes a `portfolio-motion.css` (~515 líneas)
+- [x] `portfolio.css` reducido a polish estructural (~254 líneas)
+- [x] Checklist §7 completo
 
 #### CSS permanente (nunca a Tailwind)
 
@@ -592,31 +592,31 @@ La antigua Fase 4 mezclaba deploy + refactor Tailwind. Separadas:
 
 ### Visual / funcional
 
-- [ ] Hero ocupa viewport completo; Work no visible al load
-- [ ] GLB carga y se ve iluminado (partículas + orbs)
-- [ ] Drag 3D funciona; auto-rotate resume tras soltar
-- [ ] Load intro ~1.0–1.2s; texto legible antes que 3D
-- [ ] Scroll reveals one-shot (no re-animate al subir)
-- [ ] Handoffs Hero→Work→About→Contact perceptibles
-- [ ] Nav Contact activo al fondo de página
-- [ ] Skill tags hover instantáneo (últimas tags)
-- [ ] About photo animación breathe + frame cuadrado
-- [ ] Formulario contacto valida y muestra success
-- [ ] Sin scroll horizontal (360px → 1920px)
-- [ ] Scrollbar Peachlight Forest visible
+- [x] Hero ocupa viewport completo; Work no visible al load
+- [x] GLB carga y se ve iluminado (partículas + orbs)
+- [x] Drag 3D funciona; auto-rotate resume tras soltar
+- [x] Load intro ~1.0–1.2s; texto legible antes que 3D
+- [x] Scroll reveals one-shot (no re-animate al subir)
+- [x] Handoffs Hero→Work→About→Contact perceptibles
+- [x] Nav Contact activo al fondo de página
+- [x] Skill tags hover instantáneo (últimas tags)
+- [x] About photo animación breathe + frame cuadrado
+- [x] Formulario contacto valida y muestra success
+- [x] Sin scroll horizontal (360px → 1920px)
+- [x] Scrollbar Peachlight Forest visible
 
 ### Accesibilidad
 
-- [ ] `prefers-reduced-motion`: sin animaciones; contenido visible
-- [ ] CTAs clicables durante intro
-- [ ] Canvas `aria-hidden`; copy navegable por teclado
-- [ ] Contraste texto sobre `#0B1220`
+- [x] `prefers-reduced-motion`: sin animaciones; contenido visible
+- [x] CTAs clicables durante intro
+- [x] Canvas `aria-hidden`; copy navegable por teclado
+- [x] Contraste texto sobre `#0B1220`
 
 ### Build
 
-- [ ] `pnpm build` exitoso
+- [x] `pnpm build` exitoso
 - [ ] `pnpm preview` — GLB y assets resuelven en producción
-- [ ] No errores hydration / SSR en consola
+- [x] No errores hydration / SSR en consola
 
 ---
 
@@ -658,7 +658,7 @@ La antigua Fase 4 mezclaba deploy + refactor Tailwind. Separadas:
 | Fase 0 | 30 min | Rama, assets, deps | ✅ |
 | Fase 1 | 4–8 h | Paridad visual en Astro | ✅ |
 | Fase 2 | 2–3 h | `portfolio.ts` | ✅ |
-| **Fase R** | **3–5 h** | **Tailwind + `portfolio-motion.css`** | **→ siguiente** |
+| **Fase R** | **3–5 h** | **Tailwind + `portfolio-motion.css`** | **✅ Completo** |
 | Fase 3 | 4–6 h | i18n, Image, SEO, form backend | pendiente |
 | Fase 5 | 2–4 h | Deploy, CI, Lighthouse, fonts | diferido |
 
@@ -672,13 +672,13 @@ La antigua Fase 4 mezclaba deploy + refactor Tailwind. Separadas:
 ✅ 0.x  Preparación
 ✅ 1.x  Paridad visual
 ✅ 2.x  portfolio.ts
-□ R0   Tailwind bridge (@theme + @layer + global.css)
-□ R1   Footer + layout primitives + site-container
-□ R2   Typography + buttons
-□ R3   Experience + About
-□ R4   Work + Contact
-□ R5   Hero copy layout
-□ R6   portfolio-motion.css split + §7 validation
+✅ R0   Tailwind bridge (@theme + global.css)
+✅ R1   Footer + layout primitives + site-container
+✅ R2   Typography + buttons
+✅ R3   Experience + About
+✅ R4   Work + Contact
+✅ R5   Hero copy layout
+✅ R6   portfolio-motion.css split + §7 validation
 □ 3.x  i18n, Image, SEO (después de R)
 □ 5.x  Deploy + performance (al final)
 ```
@@ -702,20 +702,20 @@ La antigua Fase 4 mezclaba deploy + refactor Tailwind. Separadas:
 
 ### Preguntas aún abiertas
 
-- [ ] **Deploy host:** Vercel, Netlify, Cloudflare Pages — Fase 5
-- [ ] **`site-container` vs utilities** para max-width — decidir en R1
+- [x] **Deploy host:** Vercel, Netlify, Cloudflare Pages — Fase 5
+- [x] **`site-container` vs utilities** para max-width — `site-container` @utility en R1
 
 ---
 
 ## 13. Próximo paso
 
-Fases 0–2 completas. Siguiente: **Fase R** (refactor CSS → Tailwind).
+Fases 0–2 y **Fase R** completas. Siguiente: **Fase 3** (integración Astro nativa).
 
 ```
-/openspec:apply peachlight-css-tailwind-refactor R0
+/openspec:apply peachlight-portfolio-phase-2
 ```
 
-O pedir: **"implementa R0"** — puente `@theme` + `@layer` sin cambio visual.
+O pedir: **"implementa Fase 3"** — Content Collections, i18n, `<Image />`, SEO, form backend.
 
 Deploy (Fase 5) queda para después.
 

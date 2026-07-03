@@ -1,5 +1,6 @@
 ---
 import portrait from '../assets/Iam.webp';
+import PortfolioFadeText from './PortfolioFadeText.astro';
 import { about, sections } from '../data/portfolio';
 ---
 
@@ -17,13 +18,17 @@ import { about, sections } from '../data/portfolio';
           data-od-id="about-photo"
         />
       </figure>
-      <div class="forest-panel p-[clamp(24px,3.5vw,32px)] reveal-stagger">
-        <p class="eyebrow text-rise" style="--rise-i: 0">{sections.about.eyebrow}</p>
-        <h2 class="text-rise" style="--rise-i: 1" data-od-id="about-heading">{sections.about.heading}</h2>
-        <p class="lead text-rise" style="margin-top: 20px; --rise-i: 2" data-od-id="about-bio">
+      <div class="forest-panel p-[clamp(24px,3.5vw,32px)]">
+        <PortfolioFadeText as="p" class="eyebrow" enhance delay={0}>
+          {sections.about.eyebrow}
+        </PortfolioFadeText>
+        <PortfolioFadeText as="h2" enhance delay={0.08} data-od-id="about-heading">
+          {sections.about.heading}
+        </PortfolioFadeText>
+        <PortfolioFadeText as="p" class="lead mt-5" enhance delay={0.16} data-od-id="about-bio">
           {about.bio}
-        </p>
-        <dl class="mt-[var(--gap-lg)] pt-[var(--gap-lg)] border-t border-border flex flex-col gap-[var(--gap-sm)] text-rise" style="--rise-i: 3" data-od-id="about-education">
+        </PortfolioFadeText>
+        <PortfolioFadeText as="dl" class="mt-[var(--gap-lg)] pt-[var(--gap-lg)] border-t border-border flex flex-col gap-[var(--gap-sm)]" enhance delay={0.24} data-od-id="about-education">
           <div>
             <dt class="font-mono text-[11px] tracking-[0.06em] uppercase text-muted">{about.education.label}</dt>
             <dd class="m-0 mb-[var(--gap-sm)] text-[15px] text-fg">{about.education.value}</dd>
@@ -32,9 +37,11 @@ import { about, sections } from '../data/portfolio';
             <dt class="font-mono text-[11px] tracking-[0.06em] uppercase text-muted">{about.languages.label}</dt>
             <dd class="m-0 mb-[var(--gap-sm)] text-[15px] text-fg">{about.languages.value}</dd>
           </div>
-        </dl>
-        <div class="text-rise" style="--rise-i: 4" data-od-id="skills-section">
-          <p class="meta mt-[var(--gap-lg)] mb-0">Skills</p>
+        </PortfolioFadeText>
+        <div class="reveal" data-od-id="skills-section">
+          <PortfolioFadeText as="p" class="meta mt-[var(--gap-lg)] mb-0" enhance delay={0.32}>
+            Skills
+          </PortfolioFadeText>
           <div class="mt-[var(--gap-md)] flex flex-wrap gap-2">
             {about.skills.map((skill, index) => (
               <span class="tag" style={`--tag-i: ${index}`}>{skill}</span>

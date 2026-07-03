@@ -161,8 +161,8 @@ function initPortfolioMotion(): void {
 
   initSectionHandoffs();
 
-  const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealTargets = document.querySelectorAll('.reveal, .reveal-stagger');
+  const motionOk = !globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealTargets = document.querySelectorAll('.reveal');
   if (motionOk) {
     let pendingReveals = revealTargets.length;
     const observer = new IntersectionObserver(

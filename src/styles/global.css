@@ -43,11 +43,20 @@
     @apply border-accent bg-accent;
     color: var(--bg);
   }
+
+  .tag {
+    @apply inline-flex items-center rounded-full border border-border bg-transparent px-2.5 py-1 text-[12px] text-muted;
+  }
+
+  .tag-internal {
+    @apply font-mono text-[11px] tracking-[0.04em] uppercase;
+  }
 }
 
 /* Unlayered: preserves Peachlight Forest polish (cards, forms, hero, motion).
    Tailwind utilities/components only override where explicitly migrated. */
 @import "./portfolio.css";
+@import "./portfolio-motion.css";
 
 /* Links inherit color from legacy `a { color: inherit }` — restore CTA text on accent fill */
 a.btn-accent-fill {

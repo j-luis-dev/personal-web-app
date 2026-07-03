@@ -1,4 +1,5 @@
 ---
+import PortfolioFadeText from './PortfolioFadeText.astro';
 import { site } from '../data/portfolio';
 ---
 
@@ -22,16 +23,26 @@ import { site } from '../data/portfolio';
     <div class="hero-ambient-grain"></div>
   </div>
   <div class="hero-handoff-bridge" aria-hidden="true" data-od-id="hero-work-bridge"></div>
-  <div class="site-container hero-split">
-    <div class="hero-copy">
-      <p class="eyebrow hero-rise" style="--rise-delay: 40ms">{site.eyebrow}</p>
-      <h1 class="h1 hero-rise-lines" data-od-id="hero-headline">
-        <span class="hero-rise hero-rise-line" style="--rise-delay: 80ms">{site.name.first}</span><br>
-        <span class="hero-rise hero-rise-line" style="--rise-delay: 160ms">{site.name.last}</span>
+  <div class="site-container relative z-[1] grid w-full min-w-0 grid-cols-2 items-center gap-[var(--gap-2xl)] max-[920px]:grid-cols-1 max-[920px]:gap-[var(--gap-xl)]">
+    <div class="relative z-[2] min-w-0 max-w-full">
+      <PortfolioFadeText as="p" class="eyebrow" delay={0.04}>
+        {site.eyebrow}
+      </PortfolioFadeText>
+      <h1 class="h1" data-od-id="hero-headline">
+        <PortfolioFadeText as="span" delay={0.08} class="hero-headline-line max-w-full break-words">
+          {site.name.first}
+        </PortfolioFadeText><br>
+        <PortfolioFadeText as="span" delay={0.16} class="hero-headline-line max-w-full break-words">
+          {site.name.last}
+        </PortfolioFadeText>
       </h1>
-      <p class="hero-role hero-rise" style="--rise-delay: 240ms">{site.role}</p>
-      <p class="lead hero-rise" style="margin-top: 20px; --rise-delay: 320ms" data-od-id="hero-tagline">{site.tagline}</p>
-      <div class="hero-cta hero-rise" style="--rise-delay: 400ms">
+      <PortfolioFadeText as="p" class="mt-2 font-mono text-[14px] tracking-[0.04em] text-muted" delay={0.24}>
+        {site.role}
+      </PortfolioFadeText>
+      <PortfolioFadeText as="p" class="lead mt-5" delay={0.32} data-od-id="hero-tagline">
+        {site.tagline}
+      </PortfolioFadeText>
+      <PortfolioFadeText as="div" class="mt-7 inline-flex flex-wrap gap-[var(--gap-sm)]" delay={0.4}>
         <a
           href={site.ctas.primary.href}
           class="btn-base btn-accent-fill hover:bg-[var(--accent-hover)] focus-visible:bg-[var(--accent-hover)]"
@@ -42,7 +53,7 @@ import { site } from '../data/portfolio';
           class="btn-base border-border bg-transparent text-fg after:content-['→'] after:transition-transform after:duration-200 hover:border-accent hover:after:translate-x-0.5 focus-visible:border-accent"
           data-od-id="hero-cta-secondary"
         >{site.ctas.secondary.label}</a>
-      </div>
+      </PortfolioFadeText>
     </div>
     <div class="mascot-stage forest-panel hero-mascot-enter" data-od-id="hero-mascot" aria-label="Forest guide — 3D character">
       <span class="hero-orb hero-orb--local" aria-hidden="true"></span>

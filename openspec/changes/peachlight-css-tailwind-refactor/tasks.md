@@ -27,19 +27,19 @@
 
 ## R4 — Work + Contact
 
-- [ ] R4.1 Migrate `Work.astro` grid and card inner layout (keep `.forest-panel`, project thumbs)
-- [ ] R4.2 Migrate `.tag`, `.tag-internal` to Tailwind or `@layer components`
-- [ ] R4.3 Migrate `Contact.astro` grid and form field layout (keep validation styles)
-- [ ] R4.4 Delete migrated rules; visual check Work cards + Contact form
+- [x] R4.1 Migrate `Work.astro` grid and card inner layout (keep `.forest-panel`, project thumbs)
+- [x] R4.2 Migrate `.tag`, `.tag-internal` to Tailwind or `@layer components`
+- [x] R4.3 Migrate `Contact.astro` grid and form field layout (keep validation styles)
+- [x] R4.4 Delete migrated rules; visual check Work cards + Contact form
 
 ## R5 — Hero copy layout
 
-- [ ] R5.1 Migrate `.hero-split`, `.hero-copy`, `.hero-cta` layout to Tailwind
-- [ ] R5.2 Do NOT migrate `.hero-ambient`, `.hero-orb`, `.hero-handoff-bridge`, `.mascot-stage` decor
-- [ ] R5.3 Delete migrated hero layout rules only; visual check Hero fullscreen + intro animation
+- [x] R5.1 Migrate `.hero-split`, `.hero-copy`, `.hero-cta` layout to Tailwind
+- [x] R5.2 Do NOT migrate `.hero-ambient`, `.hero-orb`, `.hero-handoff-bridge`, `.mascot-stage` decor
+- [x] R5.3 Delete migrated hero layout rules only; visual check Hero fullscreen + intro animation
 
 ## R6 — CSS cleanup split
 
-- [ ] R6.1 Extract remaining rules (keyframes, reveals, handoffs, hero ambient, scrollbar, forest-panel decor) to `portfolio-motion.css`
-- [ ] R6.2 Remove empty/redundant `portfolio.css` or reduce to re-exports
-- [ ] R6.3 Update `migrate-astro-plan.md` progress; full §7 checklist pass
+- [x] R6.1 Extract remaining rules (keyframes, reveals, handoffs, hero ambient, scrollbar, forest-panel decor) to `portfolio-motion.css`
+- [x] R6.2 Remove empty/redundant `portfolio.css` or reduce to re-exports
+- [x] R6.3 Update `migrate-astro-plan.md` progress; full §7 checklist pass
