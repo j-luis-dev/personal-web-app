@@ -67,5 +67,29 @@ import { site } from '../data/portfolio';
 </section>
 
 <script>
-  import '../scripts/hero-scene.ts';
+  const canvas = document.getElementById('hero-3d-canvas');
+  const hero = document.querySelector('[data-od-id="hero"]');
+
+  function loadHeroScene() {
+    import('../scripts/hero-scene.ts').then(({ initHeroScene }) => {
+      if (canvas) initHeroScene(canvas);
+    });
+  }
+
+  if (canvas && hero) {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) {
+            observer.disconnect();
+            loadHeroScene();
+          }
+        },
+        { rootMargin: '120px 0px' },
+      );
+      observer.observe(hero);
+    } else {
+      loadHeroScene();
+    }
+  }
 </script>

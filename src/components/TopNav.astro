@@ -4,7 +4,7 @@ import { nav } from '../data/portfolio';
 
 <header class="topnav load-intro-nav" data-od-id="topnav">
   <div class="site-container flex items-center justify-between py-[14px]">
-    <a href="#" class="font-display text-[19px] font-semibold tracking-[-0.01em]" data-od-id="logo">{nav.logoLabel}</a>
+    <a href={import.meta.env.BASE_URL} class="font-display text-[19px] font-semibold tracking-[-0.01em]" data-od-id="logo">{nav.logoLabel}</a>
     <nav class="flex gap-[var(--gap-lg)] max-[720px]:hidden" data-od-id="main-nav">
       {nav.links.map((link) => (
         <a href={link.href}>{link.label}</a>

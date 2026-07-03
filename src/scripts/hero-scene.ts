@@ -87,6 +87,8 @@ function updateParticles(points, elapsed, reducedMotion) {
 export function initHeroScene(canvas) {
   if (!canvas) return null;
 
+  const assetBase = import.meta.env.BASE_URL;
+
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isMobile = window.matchMedia('(max-width: 720px)').matches;
   var particleCount = reducedMotion ? 0 : isMobile ? 30 : 80;
@@ -220,11 +222,11 @@ export function initHeroScene(canvas) {
   var modelRoot = null;
   var modelBaseY = 0;
   var dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderPath('/draco/gltf/');
+  dracoLoader.setDecoderPath(`${assetBase}draco/gltf/`);
   var loader = new GLTFLoader();
   loader.setDRACOLoader(dracoLoader);
   loader.load(
-    '/models/Meshy_AI_Pet.glb',
+    `${assetBase}models/Meshy_AI_Pet.glb`,
     function (gltf) {
       modelRoot = gltf.scene;
       modelRoot.traverse(function (child) {
@@ -342,6 +344,3 @@ export function initHeroScene(canvas) {
     },
   };
 }
-
-var canvasEl = document.getElementById('hero-3d-canvas');
-if (canvasEl) initHeroScene(canvasEl);

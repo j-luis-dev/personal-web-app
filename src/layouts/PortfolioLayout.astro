@@ -1,25 +1,66 @@
 ---
 import '../styles/tokens.css';
 import '../styles/global.css';
+import portrait from '../assets/Iam.webp';
 import { site } from '../data/portfolio';
+import { buildPersonSchema, buildWebSiteSchema, getOgImageSrc } from '../lib/seo';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImagePath = await getOgImageSrc(portrait);
+const ogImageURL = new URL(ogImagePath, Astro.site).href;
+
+const personSchema = buildPersonSchema({ canonicalUrl: canonicalURL, imageSrc: ogImageURL });
+const webSiteSchema = buildWebSiteSchema(canonicalURL);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={site.description} />
-    <title>{site.title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0b1220" />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalURL.href} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <link rel="me" href="https://github.com/j-luis-dev" />
+    <link rel="me" href="https://www.linkedin.com/in/jose-luis-jimenez-91419a1a6/" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content={site.name.first} />
+    <meta property="profile:last_name" content={site.name.last} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
   </head>
   <body>
+    <a class="skip-link" href="#content">Skip to main content</a>
     <div class="scroll-progress" aria-hidden="true" data-od-id="scroll-progress"></div>
     <slot />
     <script>
@@ -27,3 +68,22 @@ import { site } from '../data/portfolio';
     </script>
   </body>
 </html>
+
+<style is:global>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: var(--gutter, 16px);
+    z-index: 100;
+    padding: 12px 16px;
+    border-radius: var(--radius, 8px);
+    background: var(--fg);
+    color: var(--bg);
+    font: 500 14px/1 var(--font-body, system-ui, sans-serif);
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    top: 12px;
+  }
+</style>
