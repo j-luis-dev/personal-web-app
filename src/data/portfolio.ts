@@ -51,10 +51,10 @@ export type SectionCopy = {
 export const site = {
   title: 'José Luis Jiménez Vázquez · Software Engineer',
   description:
-    'José Luis Jiménez Vázquez — Software Engineer · Front-End Architect. Design systems, React, TypeScript.',
+    'José Luis Jiménez Vázquez — Software Engineer · Full Stack. Design systems, React, TypeScript.',
   name: { first: 'José Luis', last: 'Jiménez Vázquez' },
   eyebrow: 'Software Engineer · Full Stack',
-  role: 'Software Engineer · Front-End Architect',
+  role: 'Software Engineer · Full Stack',
   tagline:
     'I design UI systems and web/mobile products with React, TypeScript, and design systems.',
   location: 'Mexico City',
@@ -154,7 +154,7 @@ export const experience: ExperienceEntry[] = [
     id: 'exp-kodevox',
     period: 'Jun 2024 – Mar 2026',
     company: 'Kode Vox',
-    role: 'Front-End Architect / Senior Full-Stack',
+    role: 'Senior Full-Stack',
     detail:
       'MDS Design System, Astro+React documentation site, custom CLI — ~80% faster layout scaffolding.',
     revealDelay: '80ms',
