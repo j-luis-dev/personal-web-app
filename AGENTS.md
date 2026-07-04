@@ -9,7 +9,7 @@ Guide for AI agents working on **personal-web-app** — José Luis Jiménez's Pe
 | Aspect | Detail |
 |--------|--------|
 | **Stack** | Astro 7, Tailwind CSS v4 (`@tailwindcss/vite`), Three.js, TypeScript |
-| **Deploy target** | GitHub Pages (`PUBLIC_SITE_URL` + `PUBLIC_BASE_PATH` in `astro.config.mjs`) |
+| **Deploy target** | Vercel (primary) `.env` locally, Vercel dashboard in production |
 | **Content model** | Typed constants in `src/data/portfolio.ts` (YAML content collections planned via OpenSpec) |
 | **Testing** | Vitest unit tests (`src/**/*.test.ts`, `vitest.config.ts`) + Playwright E2E (`tests/`, `.github/workflows/playwright.yml`, `.github/workflows/vitest.yml`) |
 | **Spec workflow** | OpenSpec (`openspec/`, spec-driven schema) |
@@ -161,10 +161,14 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ### Environment variables
 
-| Variable | Default | Purpose |
-|----------|---------|---------|
-| `PUBLIC_SITE_URL` | `https://j-luis-dev.github.io` | Canonical site origin |
-| `PUBLIC_BASE_PATH` | `/personal-web-app` | GitHub Pages subpath |
+Copy `.env.example` → `.env` for local dev. Astro reads `PUBLIC_*` at build time via `astro.config.mjs`.
+
+| Variable | Vercel | GitHub Pages | Purpose |
+|----------|--------|--------------|---------|
+| `PUBLIC_SITE_URL` | `https://<project>.vercel.app` | `https://j-luis-dev.github.io` | Canonical site origin (SEO, sitemap) |
+| `PUBLIC_BASE_PATH` | `/` | `/personal-web-app` | Asset and route base path |
+
+Vercel build settings: Framework **Astro**, Build `astro build`, Output `dist`, Install `pnpm install`. Set `NODE_VERSION=22` in Vercel env vars (matches `engines.node` in `package.json`).
 
 ### Conventions for agents
 
