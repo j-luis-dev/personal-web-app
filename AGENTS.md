@@ -115,7 +115,6 @@ Skills live in `.agents/skills/` and are exposed to Claude via symlinks in `.cla
 | **typescript-advanced-types** | Complex TypeScript types for data models. |
 | **nodejs-best-practices** | Node.js runtime patterns (limited use in static Astro site). |
 | **nodejs-backend-patterns** | Backend/API patterns (future server features). |
-| **remotion-best-practices** | Video/motion compositions (not used in current portfolio). |
 
 ### OpenSpec workflow skills (`.claude/skills/`)
 
