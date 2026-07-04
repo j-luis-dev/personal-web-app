@@ -11,7 +11,7 @@ Guide for AI agents working on **personal-web-app** — José Luis Jiménez's Pe
 | **Stack** | Astro 7, Tailwind CSS v4 (`@tailwindcss/vite`), Three.js, TypeScript |
 | **Deploy target** | GitHub Pages (`PUBLIC_SITE_URL` + `PUBLIC_BASE_PATH` in `astro.config.mjs`) |
 | **Content model** | Typed constants in `src/data/portfolio.ts` (YAML content collections planned via OpenSpec) |
-| **Testing** | Playwright (`tests/`, `.github/workflows/playwright.yml`) |
+| **Testing** | Vitest unit tests (`src/**/*.test.ts`, `vitest.config.ts`) + Playwright E2E (`tests/`, `.github/workflows/playwright.yml`, `.github/workflows/vitest.yml`) |
 | **Spec workflow** | OpenSpec (`openspec/`, spec-driven schema) |
 
 ---
@@ -23,6 +23,7 @@ personal-web-app/
 ├── AGENTS.md                 # This file — agent onboarding & architecture
 ├── astro.config.mjs          # Site URL, base path, sitemap, Tailwind Vite plugin
 ├── package.json              # Scripts and dependencies
+├── vitest.config.ts          # Unit test runner (Astro getViteConfig)
 ├── playwright.config.ts      # E2E test runner config
 │
 ├── .agents/skills/           # Domain skills (source of truth)
@@ -154,7 +155,10 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 | `pnpm dev` | Start dev server |
 | `pnpm build` | Production build → `dist/` |
 | `pnpm preview` | Preview production build |
-| `pnpm exec playwright test` | Run E2E tests |
+| `pnpm test:unit` | Run Vitest unit tests |
+| `pnpm test:unit:watch` | Run Vitest in watch mode |
+| `pnpm test:e2e` | Run Playwright E2E tests |
+| `pnpm test` | Run unit tests, then E2E tests |
 
 ### Environment variables
 

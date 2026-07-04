@@ -1,13 +1,6 @@
 import './contact-form.ts';
+import { clampHandoff, smoothHandoff } from '../lib/motion.ts';
 import { isHTMLElement } from './client-dom.ts';
-
-function clampHandoff(v: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, v));
-}
-
-function smoothHandoff(t: number): number {
-  return t * t * (3 - 2 * t);
-}
 
 function initPortfolioMotion(): void {
   if (globalThis.window === undefined) return;
