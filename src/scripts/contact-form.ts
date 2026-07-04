@@ -1,39 +1,40 @@
+import { isFormFieldInput, isSubmitButton } from './client-dom.ts';
+
+function validateField(field: Element): boolean {
+  const input = field.querySelector('.input, .textarea');
+  if (!input || !isFormFieldInput(input)) return true;
+  const valid = input.checkValidity();
+  field.classList.toggle('is-invalid', !valid);
+  return valid;
+}
+
 export function initContactForm(): void {
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (globalThis.window === undefined) return;
+
+  const form = document.getElementById('contact-form');
+  if (!(form instanceof HTMLFormElement)) return;
+
   const success = document.getElementById('form-success');
-
-  function validateField(field: Element): boolean {
-    const input = field.querySelector('.input, .textarea') as
-      | HTMLInputElement
-      | HTMLTextAreaElement
-      | null;
-    if (!input) return true;
-    const valid = input.checkValidity();
-    field.classList.toggle('is-invalid', !valid);
-    return valid;
-  }
-
-  if (!form) return;
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const fields = form.querySelectorAll('.field');
     let allValid = true;
-    fields.forEach((f) => {
-      if (!validateField(f)) allValid = false;
-    });
+    for (const field of fields) {
+      if (!validateField(field)) allValid = false;
+    }
     if (!allValid) return;
-    const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-    if (submit) submit.disabled = true;
+    const submit = form.querySelector('button[type="submit"]');
+    if (isSubmitButton(submit)) submit.disabled = true;
     success?.classList.add('is-visible');
   });
 
-  form.querySelectorAll('.input, .textarea').forEach((input) => {
+  for (const input of form.querySelectorAll('.input, .textarea')) {
     input.addEventListener('blur', () => {
       const field = input.closest('.field');
       if (field) validateField(field);
     });
-  });
+  }
 }
 
 initContactForm();

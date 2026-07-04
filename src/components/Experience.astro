@@ -35,7 +35,7 @@ import { experience, sections } from '../data/portfolio';
             data-od-id={entry.id}
           >
             {entry.entries.map((item, index) => (
-              <>
+              <span class="inline">
                 {index > 0 && <>&nbsp;·&nbsp;</>}
                 <strong style="color: var(--fg); font-weight: 500;">{item.company}</strong>
                 {' · '}
@@ -44,7 +44,7 @@ import { experience, sections } from '../data/portfolio';
                 {item.period}
                 {' — '}
                 {item.detail}
-              </>
+              </span>
             ))}
           </div>
         ),

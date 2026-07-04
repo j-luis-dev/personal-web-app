@@ -1,18 +1,29 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('homepage has title and hero headline', async ({ page }) => {
+  await page.goto('.');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+  await expect(page).toHaveTitle(/José Luis Jiménez/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('José Luis');
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('skip link targets main content', async ({ page }) => {
+  await page.goto('.');
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  const skipLink = page.getByRole('link', { name: 'Skip to main content' });
+  await expect(skipLink).toHaveAttribute('href', '#content');
+});
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+test('contact form validates required fields', async ({ page }) => {
+  await page.goto('.');
+
+  await page.getByRole('button', { name: 'Send message' }).click();
+  await expect(page.locator('#contact-form .field.is-invalid')).toHaveCount(3);
+});
+
+test('navigation scrolls to work section', async ({ page }) => {
+  await page.goto('.');
+
+  await page.getByRole('link', { name: 'Work', exact: true }).click();
+  await expect(page.locator('#work')).toBeInViewport();
 });

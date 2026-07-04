@@ -1,38 +1,39 @@
 ---
 import FadeInText from '@astroanimate/core/FadeInText';
 
+type FadeInElement =
+  | 'div'
+  | 'section'
+  | 'article'
+  | 'aside'
+  | 'main'
+  | 'header'
+  | 'footer'
+  | 'nav'
+  | 'span'
+  | 'p'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'li'
+  | 'ul'
+  | 'ol'
+  | 'a'
+  | 'button'
+  | 'dl'
+  | 'dt'
+  | 'dd';
+
 interface Props {
-  as?:
-    | 'div'
-    | 'section'
-    | 'article'
-    | 'aside'
-    | 'main'
-    | 'header'
-    | 'footer'
-    | 'nav'
-    | 'span'
-    | 'p'
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'li'
-    | 'ul'
-    | 'ol'
-    | 'a'
-    | 'button'
-    | 'dl'
-    | 'dt'
-    | 'dd';
+  as?: FadeInElement;
   delay?: number;
   duration?: number;
   enhance?: boolean;
   class?: string;
   inViewMargin?: string;
-  [key: string]: unknown;
 }
 
 const {
@@ -43,9 +44,14 @@ const {
   class: className = '',
   inViewMargin = '-40px',
   ...rest
-} = Astro.props as Props;
+} = Astro.props as Props & Record<string, unknown>;
 
-const resolvedDuration = duration ?? (enhance ? 0.46 : 0.5);
+function resolveFadeDuration(duration: number | undefined, enhance: boolean): number {
+  if (duration !== undefined) return duration;
+  return enhance ? 0.46 : 0.5;
+}
+
+const resolvedDuration = resolveFadeDuration(duration, enhance);
 ---
 
 <FadeInText

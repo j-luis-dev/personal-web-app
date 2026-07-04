@@ -1,7 +1,16 @@
 import './contact-form.ts';
+import { isHTMLElement } from './client-dom.ts';
+
+function clampHandoff(v: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, v));
+}
+
+function smoothHandoff(t: number): number {
+  return t * t * (3 - 2 * t);
+}
 
 function initPortfolioMotion(): void {
-  if (typeof window === 'undefined') return;
+  if (globalThis.window === undefined) return;
 
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.topnav nav a');
@@ -15,66 +24,62 @@ function initPortfolioMotion(): void {
   } | null = null;
 
   function measureLayout(): void {
-    const heroEl = document.querySelector('[data-od-id="hero"]') as HTMLElement | null;
+    const heroEl = document.querySelector('[data-od-id="hero"]');
     const workEl = document.getElementById('work');
     const aboutEl = document.getElementById('about');
     const contactEl = document.getElementById('contact');
     layoutCache = {
-      docH: document.documentElement.scrollHeight - window.innerHeight,
-      hero: heroEl
-        ? { top: heroEl.offsetTop, bottom: heroEl.offsetTop + heroEl.offsetHeight }
-        : null,
+      docH: document.documentElement.scrollHeight - globalThis.window.innerHeight,
+      hero:
+        isHTMLElement(heroEl)
+          ? { top: heroEl.offsetTop, bottom: heroEl.offsetTop + heroEl.offsetHeight }
+          : null,
       workTop: workEl ? workEl.offsetTop : 0,
       aboutTop: aboutEl ? aboutEl.offsetTop : 0,
       contactTop: contactEl ? contactEl.offsetTop : 0,
-      sectionTops: Array.from(sections).map((sec) => ({
-        id: sec.id,
-        top: (sec as HTMLElement).offsetTop,
-      })),
+      sectionTops: Array.from(sections).flatMap((sec) =>
+        isHTMLElement(sec) ? [{ id: sec.id, top: sec.offsetTop }] : [],
+      ),
     };
   }
 
   function updateNav(): void {
-    const scrollY = window.scrollY + 120;
+    const scrollY = globalThis.window.scrollY + 120;
     let current = '';
     const sectionTops = layoutCache?.sectionTops ?? [];
     const nearBottom =
-      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
+      globalThis.window.innerHeight + globalThis.window.scrollY >= document.documentElement.scrollHeight - 80;
     if (nearBottom && sectionTops.length) {
-      current = sectionTops[sectionTops.length - 1].id;
+      current = sectionTops.at(-1)?.id ?? '';
     } else {
       for (const { id, top } of sectionTops) {
         if (top <= scrollY) current = id;
       }
     }
-    navLinks.forEach((link) => {
+    for (const link of navLinks) {
       link.classList.toggle('is-active', link.getAttribute('href') === '#' + current);
-    });
+    }
   }
 
   const heroAmbient = document.querySelector('[data-od-id="hero-ambient"]');
   const heroSectionEl = document.querySelector('[data-od-id="hero"]');
-  if (heroAmbient && heroSectionEl && 'IntersectionObserver' in window) {
+  if (heroAmbient && heroSectionEl && 'IntersectionObserver' in globalThis.window) {
     const ambientObserver = new IntersectionObserver(
       (entries) => {
-        heroAmbient.classList.toggle('is-paused', !entries[0].isIntersecting);
+        const entry = entries[0];
+        if (entry) {
+          heroAmbient.classList.toggle('is-paused', !entry.isIntersecting);
+        }
       },
       { threshold: 0.05, rootMargin: '40px 0px' },
     );
     ambientObserver.observe(heroSectionEl);
   }
 
-  function clampHandoff(v: number, min: number, max: number): number {
-    return Math.min(max, Math.max(min, v));
-  }
-
-  function smoothHandoff(t: number): number {
-    return t * t * (3 - 2 * t);
-  }
-
   function initSectionHandoffs(): void {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const hero = document.querySelector('[data-od-id="hero"]') as HTMLElement | null;
+    const reducedMotion = globalThis.window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroQuery = document.querySelector('[data-od-id="hero"]');
+    const hero = isHTMLElement(heroQuery) ? heroQuery : null;
     const work = document.getElementById('work');
     const about = document.getElementById('about');
     const contact = document.getElementById('contact');
@@ -90,11 +95,12 @@ function initPortfolioMotion(): void {
       }
 
       if (!layoutCache) measureLayout();
-      const cache = layoutCache!;
-      const scrollY = window.scrollY;
+      const cache = layoutCache;
+      if (!cache) return;
+      const scrollY = globalThis.window.scrollY;
       let docH = cache.docH;
       if (docH <= 0) {
-        docH = document.documentElement.scrollHeight - window.innerHeight;
+        docH = document.documentElement.scrollHeight - globalThis.window.innerHeight;
         cache.docH = docH;
       }
       const progress = docH > 0 ? scrollY / docH : 0;
@@ -103,7 +109,7 @@ function initPortfolioMotion(): void {
       if (hero && work && cache.hero) {
         const workTop = cache.workTop;
         const heroBottom = cache.hero.bottom;
-        const bridgeStart = heroBottom - window.innerHeight * 0.38;
+        const bridgeStart = heroBottom - globalThis.window.innerHeight * 0.38;
         const bridgeEnd = workTop + 140;
         const bridgeT = smoothHandoff(
           clampHandoff((scrollY - bridgeStart) / (bridgeEnd - bridgeStart), 0, 1),
@@ -114,8 +120,8 @@ function initPortfolioMotion(): void {
 
       if (about) {
         const aboutTop = cache.aboutTop;
-        const aboutStart = aboutTop - window.innerHeight * 0.58;
-        const aboutEnd = aboutTop - window.innerHeight * 0.12;
+        const aboutStart = aboutTop - globalThis.window.innerHeight * 0.58;
+        const aboutEnd = aboutTop - globalThis.window.innerHeight * 0.12;
         const aboutT = smoothHandoff(
           clampHandoff((scrollY - aboutStart) / (aboutEnd - aboutStart), 0, 1),
         );
@@ -126,8 +132,8 @@ function initPortfolioMotion(): void {
 
       if (contact) {
         const contactTop = cache.contactTop;
-        const contactStart = contactTop - window.innerHeight * 0.52;
-        const contactEnd = contactTop - window.innerHeight * 0.08;
+        const contactStart = contactTop - globalThis.window.innerHeight * 0.52;
+        const contactEnd = contactTop - globalThis.window.innerHeight * 0.08;
         const contactT = smoothHandoff(
           clampHandoff((scrollY - contactStart) / (contactEnd - contactStart), 0, 1),
         );
@@ -157,8 +163,8 @@ function initPortfolioMotion(): void {
       }, 120);
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize, { passive: true });
+    globalThis.window.addEventListener('scroll', onScroll, { passive: true });
+    globalThis.window.addEventListener('resize', onResize, { passive: true });
     if (reducedMotion) {
       document.documentElement.style.setProperty('--scroll-progress', '0');
     }
@@ -167,26 +173,26 @@ function initPortfolioMotion(): void {
 
   initSectionHandoffs();
 
-  const motionOk = !globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionOk = !globalThis.window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealTargets = document.querySelectorAll('.reveal');
   if (motionOk) {
     let pendingReveals = revealTargets.length;
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
             observer.unobserve(entry.target);
             pendingReveals -= 1;
             if (pendingReveals <= 0) observer.disconnect();
           }
-        });
+        }
       },
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
     );
-    revealTargets.forEach((el) => observer.observe(el));
+    for (const el of revealTargets) observer.observe(el);
   } else {
-    revealTargets.forEach((el) => el.classList.add('is-visible'));
+    for (const el of revealTargets) el.classList.add('is-visible');
   }
 }
 

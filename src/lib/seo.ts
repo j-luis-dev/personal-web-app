@@ -17,7 +17,7 @@ export async function getOgImageSrc(portrait: ImageMetadata): Promise<string> {
   return optimized.src;
 }
 
-export function buildPersonSchema({ canonicalUrl, imageSrc }: PersonSchemaInput) {
+export function buildPersonSchema({ canonicalUrl, imageSrc }: PersonSchemaInput): Record<string, unknown> {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -35,7 +35,7 @@ export function buildPersonSchema({ canonicalUrl, imageSrc }: PersonSchemaInput)
   };
 }
 
-export function buildWebSiteSchema(canonicalUrl: URL) {
+export function buildWebSiteSchema(canonicalUrl: URL): Record<string, unknown> {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',

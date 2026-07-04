@@ -1,19 +1,30 @@
 ---
-interface Props {
-  as?: 'a' | 'button';
-  href?: string;
+type ButtonProps = {
+  as?: 'button';
+  href?: never;
   type?: 'button' | 'submit' | 'reset';
   class?: string;
   'data-od-id'?: string;
-}
+};
 
+type AnchorProps = {
+  as: 'a';
+  href: string;
+  type?: never;
+  class?: string;
+  'data-od-id'?: string;
+};
+
+type Props = ButtonProps | AnchorProps;
+
+const props = Astro.props as Props;
 const {
   as = 'button',
   href,
   type = 'button',
   class: className = '',
   'data-od-id': dataOdId,
-} = Astro.props;
+} = props;
 
 const sharedClass = `shine-btn ${className}`.trim();
 ---

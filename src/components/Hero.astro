@@ -67,29 +67,31 @@ import { site } from '../data/portfolio';
 </section>
 
 <script>
-  const canvas = document.getElementById('hero-3d-canvas');
+  const canvasEl = document.getElementById('hero-3d-canvas');
   const hero = document.querySelector('[data-od-id="hero"]');
 
-  function loadHeroScene() {
-    import('../scripts/hero-scene.ts').then(({ initHeroScene }) => {
-      if (canvas) initHeroScene(canvas);
-    });
-  }
+  if (canvasEl instanceof HTMLCanvasElement && hero) {
+    const canvas: HTMLCanvasElement = canvasEl;
 
-  if (canvas && hero) {
-    if ('IntersectionObserver' in window) {
+    function loadHeroScene(target: HTMLCanvasElement) {
+      import('../scripts/hero-scene.ts').then(({ initHeroScene }) => {
+        initHeroScene(target);
+      });
+    }
+
+    if ('IntersectionObserver' in globalThis.window) {
       const observer = new IntersectionObserver(
         (entries) => {
           if (entries[0]?.isIntersecting) {
             observer.disconnect();
-            loadHeroScene();
+            loadHeroScene(canvas);
           }
         },
         { rootMargin: '120px 0px' },
       );
       observer.observe(hero);
     } else {
-      loadHeroScene();
+      loadHeroScene(canvas);
     }
   }
 </script>
