@@ -1,0 +1,71 @@
+---
+import FadeInText from '@astroanimate/core/FadeInText';
+
+type FadeInElement =
+  | 'div'
+  | 'section'
+  | 'article'
+  | 'aside'
+  | 'main'
+  | 'header'
+  | 'footer'
+  | 'nav'
+  | 'span'
+  | 'p'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'li'
+  | 'ul'
+  | 'ol'
+  | 'a'
+  | 'button'
+  | 'dl'
+  | 'dt'
+  | 'dd';
+
+interface Props {
+  as?: FadeInElement;
+  delay?: number;
+  duration?: number;
+  enhance?: boolean;
+  class?: string;
+  inViewMargin?: string;
+}
+
+const {
+  as = 'div',
+  delay = 0,
+  duration,
+  enhance = false,
+  class: className = '',
+  inViewMargin = '-40px',
+  ...rest
+} = Astro.props as Props & Record<string, unknown>;
+
+function resolveFadeDuration(duration: number | undefined, enhance: boolean): number {
+  if (duration !== undefined) return duration;
+  return enhance ? 0.46 : 0.5;
+}
+
+const resolvedDuration = resolveFadeDuration(duration, enhance);
+---
+
+<FadeInText
+  as={as}
+  enhance={enhance}
+  once={true}
+  duration={resolvedDuration}
+  delay={delay}
+  easing="cubic-bezier(0.23, 1, 0.32, 1)"
+  blur="0px"
+  yOffset={24}
+  inViewMargin={inViewMargin}
+  class={className}
+  {...rest}
+>
+  <slot />
+</FadeInText>

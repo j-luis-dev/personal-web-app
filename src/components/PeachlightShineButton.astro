@@ -1,0 +1,44 @@
+---
+type ButtonProps = {
+  as?: 'button';
+  href?: never;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  'data-od-id'?: string;
+};
+
+type AnchorProps = {
+  as: 'a';
+  href: string;
+  type?: never;
+  class?: string;
+  'data-od-id'?: string;
+};
+
+type Props = ButtonProps | AnchorProps;
+
+const props = Astro.props as Props;
+const {
+  as = 'button',
+  href,
+  type = 'button',
+  class: className = '',
+  'data-od-id': dataOdId,
+} = props;
+
+const sharedClass = `shine-btn ${className}`.trim();
+---
+
+{as === 'a' ? (
+  <a href={href} class={sharedClass} data-od-id={dataOdId}>
+    <span class="shine-btn__main">
+      <slot />
+    </span>
+  </a>
+) : (
+  <button type={type} class={sharedClass} data-od-id={dataOdId}>
+    <span class="shine-btn__main">
+      <slot />
+    </span>
+  </button>
+)}

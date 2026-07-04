@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://j-luis-dev.github.io/personal-web-app/sitemap-index.xml

@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/Iam.webp';
+import PortfolioFadeText from './PortfolioFadeText.astro';
+import { about, sections } from '../data/portfolio';
+---
+
+<section class="py-[clamp(48px,8vw,var(--gap-2xl))] border-t border-border section-handoff" id="about" data-od-id="about">
+  <div class="about-handoff-bg" aria-hidden="true" data-od-id="about-handoff-bg"></div>
+  <div class="site-container">
+    <div class="grid grid-cols-[280px_minmax(0,1fr)] items-start gap-[var(--gap-xl)] max-[920px]:grid-cols-1">
+      <figure class="forest-panel reveal m-0 w-full max-w-[280px] p-2.5 max-[920px]:mx-auto max-[920px]:max-w-[min(280px,100%)]" data-od-id="about-photo-wrap">
+        <Image
+          class="about-photo"
+          src={portrait}
+          alt={about.portraitAlt}
+          width={560}
+          height={560}
+          loading="lazy"
+          decoding="async"
+          data-od-id="about-photo"
+        />
+      </figure>
+      <div class="forest-panel about-content-panel p-[clamp(24px,3.5vw,32px)]">
+        <PortfolioFadeText as="p" class="eyebrow" enhance delay={0}>
+          {sections.about.eyebrow}
+        </PortfolioFadeText>
+        <PortfolioFadeText as="h2" class="section-heading" enhance delay={0.08} data-od-id="about-heading">
+          {sections.about.heading}
+        </PortfolioFadeText>
+        <PortfolioFadeText as="p" class="lead mt-5" enhance delay={0.16} data-od-id="about-bio">
+          {about.bio}
+        </PortfolioFadeText>
+        <PortfolioFadeText as="dl" class="mt-[var(--gap-lg)] pt-[var(--gap-lg)] border-t border-border flex flex-col gap-[var(--gap-sm)]" enhance delay={0.24} data-od-id="about-education">
+          <div>
+            <dt class="font-mono text-[11px] tracking-[0.06em] uppercase text-muted">{about.education.label}</dt>
+            <dd class="m-0 mb-[var(--gap-sm)] text-[15px] text-fg">{about.education.value}</dd>
+          </div>
+          <div>
+            <dt class="font-mono text-[11px] tracking-[0.06em] uppercase text-muted">{about.languages.label}</dt>
+            <dd class="m-0 mb-[var(--gap-sm)] text-[15px] text-fg">{about.languages.value}</dd>
+          </div>
+        </PortfolioFadeText>
+        <div class="reveal" data-od-id="skills-section">
+          <PortfolioFadeText as="p" class="meta mt-[var(--gap-lg)] mb-0" enhance delay={0.32}>
+            Skills
+          </PortfolioFadeText>
+          <div class="mt-[var(--gap-md)] flex flex-wrap gap-2">
+            {about.skills.map((skill, index) => (
+              <span class="tag" style={`--tag-i: ${index}`}>{skill}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

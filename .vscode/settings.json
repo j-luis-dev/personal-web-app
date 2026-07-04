@@ -18,5 +18,8 @@
         "titleBar.inactiveBackground": "#7838e599",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#7838E5"
+    "peacock.color": "#7838E5",
+    "cSpell.words": [
+        "Peachlight"
+    ]
 }

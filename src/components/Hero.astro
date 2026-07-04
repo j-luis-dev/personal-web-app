@@ -1,0 +1,97 @@
+---
+import PortfolioFadeText from './PortfolioFadeText.astro';
+import PeachlightShineButton from './PeachlightShineButton.astro';
+import { site } from '../data/portfolio';
+---
+
+<section class="hero section-handoff" data-od-id="hero">
+  <svg class="hero-filters" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <filter id="hero-grain" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch" result="noise"/>
+        <feColorMatrix in="noise" type="saturate" values="0" result="mono"/>
+        <feBlend in="SourceGraphic" in2="mono" mode="soft-light"/>
+      </filter>
+    </defs>
+  </svg>
+  <div class="hero-ambient" aria-hidden="true" data-od-id="hero-ambient">
+    <div class="hero-ambient-gradient"></div>
+    <div class="hero-ambient-orbs">
+      <span class="hero-orb hero-orb--warm-tr"></span>
+      <span class="hero-orb hero-orb--green-bl"></span>
+      <span class="hero-orb hero-orb--depth"></span>
+    </div>
+    <div class="hero-ambient-grain"></div>
+  </div>
+  <div class="hero-handoff-bridge" aria-hidden="true" data-od-id="hero-work-bridge"></div>
+  <div class="site-container relative z-[1] grid w-full min-w-0 grid-cols-2 items-center gap-[var(--gap-2xl)] max-[920px]:grid-cols-1 max-[920px]:gap-[var(--gap-xl)]">
+    <div class="relative z-[2] min-w-0 max-w-full">
+      <PortfolioFadeText as="p" class="eyebrow" delay={0.04}>
+        {site.eyebrow}
+      </PortfolioFadeText>
+      <h1 class="m-0 font-display text-[length:var(--fs-h1)] leading-[1.04] tracking-[-0.02em]" data-od-id="hero-headline">
+        <PortfolioFadeText as="span" delay={0.08} class="hero-headline-line max-w-full break-words">
+          {site.name.first}
+        </PortfolioFadeText><br>
+        <PortfolioFadeText as="span" delay={0.16} class="hero-headline-line max-w-full break-words">
+          {site.name.last}
+        </PortfolioFadeText>
+      </h1>
+      <PortfolioFadeText as="p" class="mt-2 font-mono text-[14px] tracking-[0.04em] text-muted" delay={0.24}>
+        {site.role}
+      </PortfolioFadeText>
+      <PortfolioFadeText as="p" class="lead mt-5" delay={0.32} data-od-id="hero-tagline">
+        {site.tagline}
+      </PortfolioFadeText>
+      <PortfolioFadeText as="div" class="mt-7 inline-flex flex-wrap gap-[var(--gap-sm)]" delay={0.4}>
+        <PeachlightShineButton
+          as="a"
+          href={site.ctas.primary.href}
+          data-od-id="hero-cta-primary"
+        >
+          {site.ctas.primary.label}
+        </PeachlightShineButton>
+        <a
+          href={site.ctas.secondary.href}
+          class="btn-base border-border bg-transparent text-fg after:content-['→'] after:transition-transform after:duration-200 hover:border-accent hover:after:translate-x-0.5 focus-visible:border-accent"
+          data-od-id="hero-cta-secondary"
+        >{site.ctas.secondary.label}</a>
+      </PortfolioFadeText>
+    </div>
+    <div class="mascot-stage forest-panel hero-mascot-enter" data-od-id="hero-mascot" aria-label="Forest guide — 3D character">
+      <span class="hero-orb hero-orb--local" aria-hidden="true"></span>
+      <div class="mascot-glow" aria-hidden="true"></div>
+      <canvas id="hero-3d-canvas" aria-label="Meshy AI Pet — forest guide"></canvas>
+    </div>
+  </div>
+</section>
+
+<script>
+  const canvasEl = document.getElementById('hero-3d-canvas');
+  const hero = document.querySelector('[data-od-id="hero"]');
+
+  if (canvasEl instanceof HTMLCanvasElement && hero) {
+    const canvas: HTMLCanvasElement = canvasEl;
+
+    function loadHeroScene(target: HTMLCanvasElement) {
+      import('../scripts/hero-scene.ts').then(({ initHeroScene }) => {
+        initHeroScene(target);
+      });
+    }
+
+    if ('IntersectionObserver' in globalThis.window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) {
+            observer.disconnect();
+            loadHeroScene(canvas);
+          }
+        },
+        { rootMargin: '120px 0px' },
+      );
+      observer.observe(hero);
+    } else {
+      loadHeroScene(canvas);
+    }
+  }
+</script>
