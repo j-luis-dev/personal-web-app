@@ -1,10 +1,12 @@
 ---
 import { footer } from '../data/portfolio';
+import { appVersion } from '../lib/version';
+
 ---
 
 <footer class="py-[var(--gap-xl)] text-muted text-[13px] border-t border-border" data-od-id="footer">
   <div class="site-container flex flex-wrap items-center justify-between gap-[var(--gap-md)]">
-    <span>{footer.copyright} · <span class="num">{footer.year}</span></span>
+    <span>{footer.copyright} · <span class="num">{footer.year}</span> · v{appVersion}</span>
     <span class="meta">{footer.meta}</span>
   </div>
 </footer>

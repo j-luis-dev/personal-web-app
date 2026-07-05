@@ -56,8 +56,8 @@ const webSiteSchema = buildWebSiteSchema(canonicalURL);
       rel="stylesheet"
     />
 
-    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to main content</a>
