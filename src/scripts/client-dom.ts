@@ -1,4 +1,4 @@
-export function isHTMLElement(node: Element | null): node is HTMLElement {
+export function isHTMLElement(node: Node | null): node is HTMLElement {
   return node instanceof HTMLElement;
 }
 

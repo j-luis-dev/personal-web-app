@@ -7,13 +7,15 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "astro": "astro",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astroanimate/core": "^0.1.2",
@@ -26,10 +28,14 @@
     "three": "^0.185.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.0",
     "@types/three": "^0.185.0",
     "happy-dom": "^20.10.6",
+    "husky": "^9.1.7",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.2",
     "vitest": "^4.1.9"
   }
 }
