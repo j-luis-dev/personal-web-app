@@ -51,12 +51,12 @@ export type SectionCopy = {
 export const site = {
   title: 'José Luis Jiménez Vázquez · Software Engineer',
   description:
-    'José Luis Jiménez Vázquez — Software Engineer · Full Stack. Design systems, React, TypeScript.',
+    'José Luis Jiménez Vázquez — Software Engineer · Full Stack. Web/mobile products, React, TypeScript, Node.js.',
   name: { first: 'José Luis', last: 'Jiménez Vázquez' },
   eyebrow: 'Software Engineer · Full Stack',
   role: 'Software Engineer · Full Stack',
   tagline:
-    'I design UI systems and web/mobile products with React, TypeScript, and design systems.',
+    'I build web/mobile products with React, TypeScript, and Node.js — APIs, microfrontends, and apps at scale.',
   location: 'Mexico City',
   ctas: {
     primary: { href: '#work', label: 'View projects' },
@@ -78,29 +78,29 @@ export const nav = {
 export const sections = {
   work: {
     eyebrow: 'Selected Work',
-    heading: 'Projects where craft meets maintainable code',
+    heading: 'Projects where engineering meets maintainable code',
   },
   experience: {
     eyebrow: 'Experience',
-    heading: 'Building design systems and product UI at scale',
+    heading: 'Building web/mobile products and platforms at scale',
   },
   about: {
     eyebrow: 'About',
-    heading: 'Craft visual, maintainable code',
+    heading: 'Engineer reliable, maintainable code',
   },
   contact: {
     eyebrow: 'Contact',
     heading: "Let's talk about your next project",
-    lead: 'Open to collaborations, design-system work, and frontend architecture roles.',
+    lead: 'Open to full-stack, frontend, and mobile engineering roles.',
   },
 } as const satisfies Record<string, SectionCopy>;
 
 export const projects: Project[] = [
   {
     id: 'mds',
-    title: 'MDS – Design System (Kode Vox)',
+    title: 'MDS – UI Platform (Kode Vox)',
     description:
-      'shadcn/MUI system, Astro+React docs, custom CLI. ~80% less time on new layouts — from hours to minutes.',
+      'MUI component library, Astro+React docs, custom CLI. ~80% less layout setup time — from hours to minutes.',
     tag: 'Internal',
     tagVariant: 'internal',
     revealDelay: '0ms',
@@ -109,7 +109,7 @@ export const projects: Project[] = [
     id: 'tvazteca',
     title: 'TV Azteca Platform (microfrontends)',
     description:
-      'Frontend architecture, Okta SSO/2FA, per-module deployments for thousands of users.',
+      'Frontend architecture, Okta SSO/2FA, microfrontends, per-module deployments for thousands of users.',
     tag: 'Internal',
     tagVariant: 'internal',
     revealDelay: '100ms',
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     id: 'occ',
     title: 'OCC App',
     description:
-      'Maintenance of app + Redarbor shared component library across OCC, Computrabajo, InfoJobs, Pandapé.',
+      'OCC app maintenance + shared component library across Computrabajo, InfoJobs, Pandapé.',
     tag: 'Mobile · Android',
     tagVariant: 'default',
     href: 'https://play.google.com/store/apps/details?id=mx.com.occ&hl=es_MX',
@@ -129,7 +129,7 @@ export const projects: Project[] = [
     id: 'asu',
     title: 'ASU – Frontend modernization',
     description:
-      'React, TypeScript, Tailwind, Atomic Design, RTK, REST/GraphQL — reduced tech debt and unified design criteria.',
+      'React, TypeScript, Tailwind, RTK, REST/GraphQL — reduced tech debt and improved maintainability.',
     tag: 'Web · Modernization',
     tagVariant: 'default',
     href: 'https://www.asu.edu',
@@ -146,7 +146,7 @@ export const experience: ExperienceEntry[] = [
     company: 'Redarbor',
     role: 'UI Mobile Developer',
     detail:
-      'Shared component library for OCC, Computrabajo, InfoJobs, and Pandapé — same UI base with per-brand theming.',
+      'OCC mobile app + shared component library for Computrabajo, InfoJobs, Pandapé — per-brand theming.',
     revealDelay: '0ms',
   },
   {
@@ -156,7 +156,7 @@ export const experience: ExperienceEntry[] = [
     company: 'Kode Vox',
     role: 'Senior Full-Stack',
     detail:
-      'MDS Design System, Astro+React documentation site, custom CLI — ~80% faster layout scaffolding.',
+      'MDS UI platform, Astro+React docs, custom CLI — ~80% faster layout scaffolding.',
     revealDelay: '80ms',
   },
   {
@@ -177,13 +177,13 @@ export const experience: ExperienceEntry[] = [
         company: 'Appmosphera',
         role: 'Frontend',
         period: '2020–2021',
-        detail: 'React web + React Native condo admin apps.',
+        detail: 'React web + React Native apps — features, bug fixes, cross-platform delivery.',
       },
       {
         company: 'DWIT',
         role: 'Junior Engineer',
         period: '2020–2021',
-        detail: 'SaaS frontend with React & React Native.',
+        detail: 'SaaS frontend with React & React Native — refactors, API integrations, performance.',
       },
     ],
     revealDelay: '240ms',
@@ -192,7 +192,7 @@ export const experience: ExperienceEntry[] = [
 
 export const about = {
   portraitAlt: 'José Luis Jiménez Vázquez — professional portrait',
-  bio: "Software engineer focused on frontend and design systems. I've led multi-brand component libraries, documentation in Astro, and microfrontend architectures. I like to connect visual craft with maintainable code.",
+  bio: "Software engineer focused on web/mobile and full-stack delivery. I've shipped microfrontend platforms, REST/GraphQL integrations, and multi-brand mobile apps. I like to connect solid engineering with maintainable code.",
   education: {
     label: 'Education',
     value:
@@ -215,7 +215,8 @@ export const about = {
     'GraphQL',
     'PostgreSQL',
     'Docker',
-    'Design Systems',
+    'REST/GraphQL',
+    'Redux',
     'TDD',
     'WCAG',
     'Monorepo',
